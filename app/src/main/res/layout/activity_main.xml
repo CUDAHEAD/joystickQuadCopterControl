@@ -10,16 +10,42 @@
     android:orientation="horizontal"
     tools:context="com.ravensoft.daniel.joysticktest.MainActivity">
 
-    <com.ravensoft.daniel.joysticktest.JoystickView
-        android:layout_width="wrap_content"
-        android:layout_height="300dp"
-        android:id="@+id/joystickLeft"
-        android:layout_weight="1"/>
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
 
-    <com.ravensoft.daniel.Throtletest.ThrotleView
-        android:layout_width="wrap_content"
-        android:layout_height="300dp"
-        android:id="@+id/joystickRight"
-        android:layout_weight="1"/>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:enabled="true"
+                android:text="scan" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <com.ravensoft.daniel.joysticktest.JoystickView
+                android:id="@+id/joystickLeft"
+                android:layout_width="wrap_content"
+                android:layout_height="300dp"
+                android:layout_weight="1" />
+
+            <com.ravensoft.daniel.Throtletest.ThrotleView
+                android:id="@+id/joystickRight"
+                android:layout_width="wrap_content"
+                android:layout_height="300dp"
+                android:layout_weight="1" />
+
+        </TableRow>
+    </TableLayout>
 
 </LinearLayout>
