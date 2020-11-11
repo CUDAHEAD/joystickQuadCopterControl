@@ -68,7 +68,11 @@ public class MainActivity extends AppCompatActivity implements JoystickView.Joys
 
             Log.d("BLE", "onConnectionStateChange");
 
-            if (status == BluetoothGatt.GATT_SUCCESS && newState == BluetoothProfile.STATE_CONNECTED) {
+            if (status == 8) {
+                mConnected = false;
+            }
+
+            if (status == BluetoothGatt.GATT_SUCCESS && newState == BluetoothProfile.STATE_CONNECTED|| status == 8) {
                 if (mConnected == false) {
                     mConnected = true;
                     Log.d("BLE", "onConnectionStateChange1");
@@ -106,6 +110,12 @@ public class MainActivity extends AppCompatActivity implements JoystickView.Joys
                         Log.d("BLE", "onServicesDiscovered button char set:  " + characteristic.getUuid());
 
                         buttonChar = characteristic;
+                        gatt.setCharacteristicNotification(buttonChar, true);
+                        for (final BluetoothGattDescriptor descriptor: buttonChar.getDescriptors()) {
+                            Log.d("BLE", "onServicesDiscovered button char desc:  " + descriptor.getUuid());
+                            descriptor.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE);
+                            gatt.writeDescriptor(descriptor);
+                        }
                     }
 
 
@@ -132,7 +142,7 @@ public class MainActivity extends AppCompatActivity implements JoystickView.Joys
                                          final BluetoothGattCharacteristic characteristic,
                                          final int status)
         {
-            Log.d("BLE", "onCharacteristicRead");
+            Log.d("BLE", "onCharacteristicRead data:" + characteristic.getIntValue(0x11,0));
 
         }
 
@@ -180,7 +190,7 @@ public class MainActivity extends AppCompatActivity implements JoystickView.Joys
         public void onCharacteristicChanged(final BluetoothGatt gatt,
                                             final BluetoothGattCharacteristic characteristic)
         {
-            Log.d("BLE", "onCharacteristicChanged");
+            Log.d("BLE", "onCharacteristicChanged value:" + characteristic.getIntValue(0x11,0));
 
         }
 
@@ -312,7 +322,6 @@ public class MainActivity extends AppCompatActivity implements JoystickView.Joys
 
 
                 bluetoothGatt.writeCharacteristic(ledChar);
-                bluetoothGatt.readCharacteristic(buttonChar);
 
             }
         });
