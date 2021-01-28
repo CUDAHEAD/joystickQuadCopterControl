@@ -118,11 +118,11 @@ public class ThrotleView extends SurfaceView implements SurfaceHolder.Callback, 
         {
             if(e.getAction() != e.ACTION_UP)
             {
-                if (e.getY() > centerY) {
-                    joystickCallback.onJoystickMoved(0, 0, getId());
-
-                    return true;
-                }
+//                if (e.getY() > centerY) {
+//                    joystickCallback.onJoystickMoved(0, 0, getId());
+//
+//                    return true;
+//                }
 
                 //float displacement = (float) Math.sqrt((Math.pow(e.getX() - centerX, 2)) + Math.pow(e.getY() - centerY, 2));
                 float displacement = (float) (e.getY() - centerY);

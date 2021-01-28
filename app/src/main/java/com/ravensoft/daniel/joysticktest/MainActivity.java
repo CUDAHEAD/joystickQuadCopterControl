@@ -333,8 +333,27 @@ public class MainActivity extends AppCompatActivity implements JoystickView.Joys
         {
             case R.id.joystickRight:
                 Log.d("Right Joystick", "X percent: " + xPercent + " Y percent: " + yPercent);
+
+                if (mConnected && ((int)(yPercent * 50) !=0 )) {
+                    byte val ;
+                    Log.d("BLE"," int percent" + (int)(yPercent * 100));
+
+                    val = (byte) ( yPercent > 0 ? ((int)(yPercent * 50) < 127 ? (int)(yPercent * 50): 127) :  ((int)(yPercent * 50 )> -127 ? (int)(yPercent * 50): -127) ) ;
+
+                    Log.d("BLE"," Updated int yPercent " + (int)(yPercent * 50));
+                    Log.d("BLE"," Updated char yPercent " + (int) ((byte)((int)(yPercent * 50))));
+
+                    Log.d("BLE"," Updated data to BLE: " + (int)val);
+
+                    ledChar.    setValue(val,0x21, 0 );
+                    ledChar.setWriteType(WRITE_TYPE_DEFAULT);
+                    bluetoothGatt.writeCharacteristic(ledChar);
+
+                }
+
                 break;
             case R.id.joystickLeft:
+
                 Log.d("Left Joystick", "X percent: " + xPercent + " Y percent: " + yPercent);
                 break;
         }
